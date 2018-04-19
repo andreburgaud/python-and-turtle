@@ -1,5 +1,7 @@
 # Makefile to help managing the project (run, deploy, clean...)
 
+.DEFAULT_GOAL := help
+
 clean:
 	find . -name '*.pyc' -delete
 	find . -name '__pycache__' -type d | xargs rm -rf
@@ -11,7 +13,7 @@ debug:
 	dev_appserver.py --log_level debug app.yaml
 
 deploy:
-	gcloud app deploy pythonandturtle/app.yaml --project=pythonandturtle
+	gcloud app deploy app.yaml --project=pythonandturtle
 
 
 update:
