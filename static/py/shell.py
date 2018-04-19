@@ -2,7 +2,7 @@ import sys
 import traceback
 
 from browser import document as doc
-from browser import window, alert, console
+from browser import window, alert
 
 _credits = """    Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
     for supporting Python development.  See www.python.org for more information."""
@@ -50,7 +50,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
 
-STORE_SHELL = "shell"
+CODE_STORE = "shell"
+HISTORY_STORE = "shell_history"
 
 def credits():
     print(_credits)
@@ -83,6 +84,10 @@ if hasattr(window, 'localStorage'):
 else:
     storage = None
 
+def storage_exists(storage_key):
+    return storage_key in storage and storage[storage_key]
+
+@doc['code'].bind('click')
 def cursorToEnd(*args):
     pos = len(doc['code'].value)
     doc['code'].setSelectionRange(pos, pos)
@@ -98,14 +103,22 @@ def get_col(area):
 
 def save():
     data = doc['code'].value
-    if storage is not None and storage.get(STORE_SHELL) != data:
-        storage[STORE_SHELL] = data
+    if storage is not None:
+        if storage.get(CODE_STORE) != data:
+            storage[CODE_STORE] = data
+            storage[HISTORY_STORE] = '\n'.join(history)
+        history_data = '\n'.join(history)
+        if storage.get(HISTORY_STORE) != history_data:
+            storage[HISTORY_STORE] = history_data
 
 def clear():
+    global current
     v = sys.implementation.version
     doc['code'].value = "Brython %s.%s.%s on %s %s\n>>> " % (
-    v[0], v[1], v[2], window.navigator.appName, window.navigator.appVersion)
+        v[0], v[1], v[2], window.navigator.appName, window.navigator.appVersion)
     doc['code'].focus()
+    history[:] = []
+    current = 0
     save()
     cursorToEnd()
 
@@ -119,8 +132,14 @@ def on_clear(*args):
     clear()
 
 def init_shell():
-    if storage is not None and STORE_SHELL in storage and storage[STORE_SHELL]:
-        doc['code'].value = storage[STORE_SHELL]
+    global current
+    if storage is not None:
+        if storage_exists(CODE_STORE):
+            doc['code'].value = storage[CODE_STORE]
+        if storage_exists(HISTORY_STORE):
+            for line in storage[HISTORY_STORE].split('\n'):
+                history.append(line)
+            current = len(history)
     else:
         v = sys.implementation.version
         doc['code'].value = "Brython %s.%s.%s on %s %s\n>>> " % (
@@ -128,7 +147,8 @@ def init_shell():
     doc['code'].focus()
     cursorToEnd()
 
-def myKeyPress(event):
+@doc['code'].bind('keypress')
+def shellKeyPress(event):
     global _status, current
     if event.keyCode == 9:  # tab key
         event.preventDefault()
@@ -202,7 +222,8 @@ def myKeyPress(event):
         cursorToEnd()
         event.preventDefault()
 
-def myKeyDown(event):
+@doc['code'].bind('keydown')
+def shellKeyDown(event):
     global _status, current
     # AB Start
     if event.keyCode == 9:  # tab key
@@ -242,10 +263,6 @@ def myKeyDown(event):
         if (lstart == -1 and len(src) < 5) or (len(src) - lstart < 6):
             event.preventDefault()
             event.stopPropagation()
-
-doc['code'].bind('keypress', myKeyPress)
-doc['code'].bind('keydown', myKeyDown)
-doc['code'].bind('click', cursorToEnd)
 
 init_shell()
 
