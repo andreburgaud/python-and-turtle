@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block page_title %}Python Shell{% endblock %}
+{% block body %}
+<div class="uk-button-group">
+  <button class="uk-button uk-button-default" uk-tooltip="title: Clear output;delay: 300" id="clear">Clear</button>
+</div>
+<div class="container ">
+  <textarea id="code" class="codearea" rows="50"></textarea>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/python3" src="/static/py/shell.py" id="__main__"></script>
+{% endblock %}

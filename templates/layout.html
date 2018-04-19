@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Online Python Editor and Shell">
+    <meta name="author" content="Andre Burgaud">
+    <meta name="keywords" content="python,education,editor,shell,interactive">
+    <title>{% block page_title %}{% endblock %}</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.css" integrity="sha256-I8NyGs4wjbMuBSUE40o55W6k6P7tu/7G28/JGUUYCIs=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/css/uikit.min.css" integrity="sha256-hjokj/q4gEroAA+3o8LZz1k2g91poMNA6Y6m3r1P8vQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/theme/lesser-dark.min.css" integrity="sha256-Wuunor/eYqtA0Arnd0/W7M4uy08DwZW49gIkqdj5eO4=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/theme/solarized.min.css" integrity="sha256-v5CcBJnFb3uNFDq7uhR4sIS7yihsXlBxN+cwxjtzp7c=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/static/css/editor.css" />
+    <link rel="stylesheet" href="/static/css/main.css" />
+  </head>
+
+  <body onload=brython()>
+    <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-left">
+        <a href="/" class="uk-navbar-item uk-logo">Python &amp; Turtle</a>
+      </div>
+      <div class="uk-navbar-right">
+        <ul class="uk-navbar-nav">
+          <li>
+            <a href="/">Editor</a>
+          </li>
+          <li>
+            <a href="/turtle">Turtle</a>
+          </li>
+          <li>
+            <a href="/shell">Shell</a>
+            <li>
+              <a uk-toggle="target: #modal-about" href="#">About</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+  {% block body %}{% endblock %}
+  {% include 'about.html' %}
+  {% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.0/dist/loadingoverlay.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/codemirror.min.js" integrity="sha256-zxnvghlATD/LUl0T6rkoZF8cKHSCHSPA4ocDtqIcFq0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.36.0/mode/python/python.min.js" integrity="sha256-8xixv7cUXoai0XezUaNNgqbcdxJTtiWzrnOcuoWzaJQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit.min.js" integrity="sha256-yl7w0KuhRsVzOpDk7EoWE2EVwwOFXPlfQDQDtwsg5ds=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.42/js/uikit-icons.min.js" integrity="sha256-pelC1MOe8KcWCQWSbkMF83x3Hb+K3xn3Fua5IUMexkU=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/split.js/split.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" integrity="sha256-NLPE2EQpOtxTAUB/jxjM97jsGmVQopiX8ceHySHhXs8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-language_tools.js" integrity="sha256-kb+/UeeIJQwoiinEYqlY7FqMXtgKpULdLvQ560OE3i4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ext-whitespace.js" integrity="sha256-5nxgnHrU33h3dzRgDjHSrfdSgfQEhyGkdzRFBEgfi2Y=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/mode-python.js" integrity="sha256-tWMgMZl8TUbMbLqy5GGO0FW6u17E/dL4fAeajLc4rJA=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/snippets/python.js" integrity="sha256-LAF6voghAEKHXu/d05/mSuc6z6HwKny5pqFxbH06X3w=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/theme-eclipse.js" integrity="sha256-YN8RoKaPEo3dSbQHymQ9xrNFUgEZYGO2XukBQTRa3WY=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/theme-monokai.js" integrity="sha256-v31yYKcQpZPqP8+KG1o2aiyVxd0w4JA7aQ+Ss/RWJlU=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/static/js/brython.js"></script>
+    <script type="text/javascript" src="/static/js/brython_stdlib.js"></script>
+  {% endblock %}
+  </body>
+</html>

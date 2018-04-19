@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block page_title %}Turtle Editor{% endblock %}
+{% block body %}
+<div class="uk-button-group">
+  <button class="uk-button uk-button-primary" uk-tooltip="title: Run Turtle code; delay: 300" id="run">Run </button>
+  <button class="uk-button uk-button-default" uk-tooltip="title: Toggle Editor Theme; delay: 300" id="theme">Light </button>
+  <button class="uk-button uk-button-default" uk-tooltip="title: Clear output; delay: 300" id="clear">Clear </button>
+  <div id='loading' class='uk-alert-primary' uk-alert>Be patient the turtles are swimming as fast as they can... <span uk-icon="icon: happy"> </span>
+  </div>
+</div>
+</div>
+<div class="container ">
+  <div id="editor" uk-tooltip="title: Turtle Python Editor; delay: 300; pos: top-right" class="split split-horizontal"></div>
+  <div id="result" class="split split-horizontal">
+    <div id="turtle" uk-tooltip="title: Turtle Output; delay: 300; pos: top-right" class="split split-vertical"></div>
+    <div id="turtle-print" class="split split-vertical">
+      <textarea id="output" uk-tooltip="title: Turtle Print Output; delay: 300; pos: top-right" autocomplete="off"></textarea>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/python3" src="/static/py/turtle.py" id="__main__"></script>
+<script type="text/javascript">
+  function showSpinner() {
+    $("#result").LoadingOverlay("show", {
+      image: "",
+      fontawesome: "fa fa-cog fa-spin",
+      fontawesomeColor: "#a0a0a0",
+      fade: false
+    });
+  }
+  function hideSpinner() {
+    $("#result").LoadingOverlay("hide", true);
+  }
+  function init() {
+    Split(['#editor', '#result'], {
+      size: [50, 50]
+    });
+    Split(['#turtle', '#turtle-print'], {
+      direction: 'vertical',
+      size: [70, 30]
+    });
+    UIkit.alert('loading', {'animation': false});
+    showSpinner();
+  }
+  $(document).ready(function() {
+      init();
+  });
+</script>
+{% endblock %}

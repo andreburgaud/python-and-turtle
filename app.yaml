@@ -1,0 +1,44 @@
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: static/images/favicon.ico
+  upload: static/images/favicon\.ico
+
+- url: /static/css
+  static_dir: static/css
+  secure: always
+
+- url: /static/js
+  static_dir: static/js
+  secure: always
+
+- url: /static/py
+  static_dir: static/py
+  secure: always
+
+- url: /static/images
+  static_dir: static/images
+  secure: always
+
+- url: .*
+  script: main.app
+  secure: always
+
+libraries:
+- name: webapp2
+  version: "latest"
+- name: jinja2
+  version: "latest"
+- name: markupsafe
+  version: "latest"
+
+skip_files:
+- ^(.*/)?.*\.DS_Store$
+- ^(.*/)?.*\.vscode$
+- ^(.*/)?.*\.py[co]$
+- README\.md
+- \.gitignore
+- Makefile

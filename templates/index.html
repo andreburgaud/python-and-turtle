@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block page_title %}Python Editor{% endblock %}
+{% block body %}
+<div class="uk-button-group">
+  <button class="uk-button uk-button-primary" uk-tooltip="title: Run Python code; delay: 300" id="run">Run</button>
+  <button class="uk-button uk-button-default" uk-tooltip="title: Toggle Editor Theme; delay: 300" id="theme">Light</button>
+  <button class="uk-button uk-button-default" uk-tooltip="title: Clear output;delay: 300" id="clear">Clear</button>
+</div>
+<div class="container ">
+  <div uk-margin id="editor" uk-tooltip="title: Python Editor; delay: 300; pos: top-right" class="split split-horizontal"></div>
+  <div uk-margin id="result" class="split split-horizontal">
+    <textarea id="output" uk-tooltip="title: Print Output; delay: 300; pos: top-right" autocomplete="off" readonly></textarea>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/python3" src="/static/py/editor.py" id="__main__"></script>
+<script type="text/javascript ">
+  function showSpinner() {
+    $("#result").LoadingOverlay("show", {
+      image: "",
+      fontawesome: "fa fa-cog fa-spin",
+      fontawesomeColor: "#a0a0a0",
+      fade: false
+    });
+  }
+  function hideSpinner() {
+    $("#result").LoadingOverlay("hide", true);
+  }
+  function init() {
+    Split(['#editor', '#result'], {
+      size: [50, 50]
+    });
+  }
+  $(document).ready(function() {
+    init();
+  });
+</script>
+{% endblock %}
