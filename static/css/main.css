@@ -27,3 +27,15 @@ textarea {
     font-family: 'Oxygen Mono', Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace;
     font-size: 14px;
 }
+
+#loading {
+    text-align: center;
+    width: 100%;
+    padding: 5px 10px 5px 10px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+div.uk-button-group {
+    width: 100%;
+}
