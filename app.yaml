@@ -42,3 +42,4 @@ skip_files:
 - README\.md
 - \.gitignore
 - Makefile
+- \.git
