@@ -111,7 +111,7 @@ def save():
         if storage.get(HISTORY_STORE) != history_data:
             storage[HISTORY_STORE] = history_data
 
-def clear():
+def reset():
     global current
     v = sys.implementation.version
     doc['code'].value = "Brython %s.%s.%s on %s %s\n>>> " % (
@@ -127,9 +127,9 @@ def shell_on_blur(*args):
 
 doc['code'].bind('blur', shell_on_blur)
 
-@doc['clear'].bind('click')
-def on_clear(*args):
-    clear()
+@doc['reset'].bind('click')
+def on_reset(*args):
+    reset()
 
 def init_shell():
     global current
