@@ -11,6 +11,7 @@ MONOKAI_THEME = "ace/theme/monokai"
 STORE_SRC = "editor_src"
 STORE_THEME = "editor_theme"
 PRINT_OUTPUT = "output"
+__BRYTHON__.debug = True
 
 if hasattr(window, 'localStorage'):
     from browser.local_storage import storage
@@ -63,6 +64,7 @@ def write_err(*args):
 
 sys.stdout.write = write_out
 sys.stderr.write = write_err
+
 
 def to_str(xx):
     return str(xx)

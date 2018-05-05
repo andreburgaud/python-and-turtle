@@ -15,6 +15,7 @@ MONOKAI_THEME = "ace/theme/monokai"
 STORE_SRC = "turtle_src"
 STORE_THEME = "turtle_theme"
 PRINT_OUTPUT = "output"
+__BRYTHON__.debug = True
 
 if hasattr(window, 'localStorage'):
     from browser.local_storage import storage
@@ -38,6 +39,8 @@ turtle.set_defaults(
     turtle_canvas_wrapper = document['turtle']
 )
 """
+
+editor.setOption("firstLineNumber", len(PREFIX.split('\n')))
 
 EXAMPLE = """# Turtle script example
 t = turtle.Turtle('turtle')
